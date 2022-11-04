@@ -1,0 +1,33 @@
+<configuration>
+    <!--    todo 替换为app包名-->
+    <property name="LOG_DIR" value="/sdcard/log/com.sik.mqtthelper/files" />
+
+    <!-- Create a logcat appender -->
+    <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
+        <encoder>
+            <pattern>%msg</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Create a file appender for DEBUG-level messages -->
+    <appender name="AllLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/logs/debug-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+
+    </appender>
+    <root level="DEBUG">
+        <appender-ref ref="logcat" />
+        <appender-ref ref="AllLog" />
+    </root>
+</configuration>
