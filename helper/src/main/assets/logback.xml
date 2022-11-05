@@ -1,6 +1,6 @@
 <configuration>
     <!--    todo 替换为app包名-->
-    <property name="LOG_DIR" value="/sdcard/log/com.sik.mqtthelper/files" />
+    <property name="LOG_DIR" value="/storage/emulated/0/Documents/mqttLogs" />
 
     <!-- Create a logcat appender -->
     <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">

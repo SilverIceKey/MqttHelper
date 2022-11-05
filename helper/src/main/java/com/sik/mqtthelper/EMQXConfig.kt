@@ -5,7 +5,10 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 
 /**
+ * emqx
  * Mqtt配置类
+ * @param brokenUrl 连接地址 例如:tcp://ip:1883
+ * @param topic 订阅主题
  */
 abstract class EMQXConfig(val brokenUrl: String, val topic: String) {
     /**
