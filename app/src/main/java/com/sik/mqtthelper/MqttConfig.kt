@@ -9,11 +9,11 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 
 class MqttConfig() : EMQXConfig("tcp://192.168.5.254:1883", "test") {
     override var username: String
-        get() = "test1"
+        get() = "admin"
         set(value) {}
 
     override var password: String
-        get() = "test1"
+        get() = "public"
         set(value) {}
 
     override fun getMemoryPersistence(): MemoryPersistence {

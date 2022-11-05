@@ -17,10 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViewById<Button>(R.id.send_message).setOnClickListener {
-            val message = MqttMessage()
-            message.qos = 2
-            message.payload = "测试数据".toByteArray()
-            EMQXHelper.instance.mqttClient.publish("test", message)
+            EMQXHelper.instance.init(MqttConfig())
         }
         val root =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString()
