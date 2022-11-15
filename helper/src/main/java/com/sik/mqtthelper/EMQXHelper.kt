@@ -53,11 +53,13 @@ class EMQXHelper {
             override fun connectionLost(cause: Throwable?) {
                 log.info("mqtt连接丢失开始重连")
                 emqxCallback?.connectionLost(cause)
+                isMqttConnect = false
                 try {
                     mqttClient.reconnect()
                     while (!mqttClient.isConnected) {
                         continue
                     }
+                    isMqttConnect = true
                     log.info("qos:${emqxConfig.qos()}")
                     mqttClient.subscribe(emqxConfig.topic, emqxConfig.qos())
                 } catch (e: MqttException) {
@@ -108,6 +110,7 @@ class EMQXHelper {
                 mqttConfig.getMemoryPersistence()
             )
             mqttClient.setCallback(mqttCallback)
+            configLoginData()
             mqttClient.connect(
                 mqttConfig.getMqttConnectOptions(),
                 this,
@@ -115,10 +118,11 @@ class EMQXHelper {
                     override fun onSuccess(asyncActionToken: IMqttToken?) {
                         log.info("topic:${mqttConfig.topic},qos:${emqxConfig.qos()}")
                         mqttClient.subscribe(mqttConfig.topic, mqttConfig.qos())
+                        isMqttConnect = true
                     }
 
                     override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-
+                        isMqttConnect = false
                     }
 
                 })
@@ -129,7 +133,16 @@ class EMQXHelper {
             log.error("cause:${me.cause}")
             log.error("excep:${me}")
             me.printStackTrace()
+            isMqttConnect = false
         }
+    }
+
+    /**
+     * 配置登录用户名密码
+     */
+    fun configLoginData() {
+        emqxConfig.getMqttConnectOptions().userName = emqxConfig.username
+        emqxConfig.getMqttConnectOptions().password = emqxConfig.password.toCharArray()
     }
 
     /**
