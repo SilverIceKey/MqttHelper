@@ -63,7 +63,7 @@ class EMQXHelper {
                     log.info("qos:${emqxConfig.qos()}")
                     mqttClient.subscribe(emqxConfig.topic, emqxConfig.qos())
                 } catch (e: MqttException) {
-
+                    log.error(e.message)
                 }
             }
 
